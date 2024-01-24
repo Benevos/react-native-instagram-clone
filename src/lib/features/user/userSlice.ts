@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initalState = {
-    gretting: 'Hello from Redux!',
+    uri: 'https://xsgames.co/randomusers/assets/avatars/female/61.jpg',
 }
 
 export const themeSlice = createSlice({
-    name: 'test',
+    name: 'theme',
     initialState: initalState,
     reducers: {
-        changeMessage: (state, action) =>
+        changeUri: (state, action) =>
         {
-            state.gretting = action.payload;
+            state.uri = action.payload;
         }
     }
 })
 
-export const { changeMessage } = themeSlice.actions; 
+export const { changeUri } = themeSlice.actions; 
 export default themeSlice.reducer;

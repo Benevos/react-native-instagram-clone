@@ -13,16 +13,11 @@ import {
 } from 'react-native';
 
 import UpperBar from '../components/home/UpperBar';
-import ActionBar from '../components/home/ActionBar';
+import ActionBar from '../components/home/ActionBar/ActionBar';
 import Stories from '../components/home/Stories/Stories';
-
-import { Provider } from 'react-redux';
-import { useAppSelector } from '../lib/hooks';
-
 
 function Home() {
   const isDarkMode = useColorScheme() === 'dark';
-  const gretting = useAppSelector(state => state.test.gretting)
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -38,7 +33,7 @@ function Home() {
         <Stories/>
 
         <View>
-          <Text>{gretting}</Text>
+          <Text>Hello, world!</Text>
         </View>
 
       </ScrollView>

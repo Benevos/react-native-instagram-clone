@@ -1,5 +1,5 @@
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import { View, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native'
+import React, { useMemo, useState } from 'react'
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -10,32 +10,43 @@ interface storyButtonType {
 
 export default function StoryButton(props: storyButtonType) 
 {
-    const { seen } = props;
-    let { uri } = props;
+    const { seen, uri } = props;
+
+    const [isSeen, setIsSeen] = useState(seen);
 
     const newStoryRingColors = ['#ffc400', '#ffc400', '#ff0000', '#ff00d4', '#ff00d4'];
     const seenStoryRingColors = ['rgba(126,126,126,0.6)', 'rgba(126,126,126,0.6)'];
 
     const getRandomNumber = (min: number, max: number) => {return Math.random() * (max - min) + min;}
 
-    if(!uri)
+    
+    const uriMemo = useMemo(() => 
     {
+        if(uri) { return uri; }
         const number = parseInt(getRandomNumber(1, 78).toFixed(0));
-        uri = `https://xsgames.co/randomusers/assets/avatars/${number % 2 === 0 ? 'male' : 'female'}/${number}.jpg`;
+        const randomUri = `https://xsgames.co/randomusers/assets/avatars/${number % 2 === 0 ? 'male' : 'female'}/${number}.jpg`;
+        return randomUri;
+    }, [uri])
+        
+    
+
+    const handlePress = () =>
+    {
+        if(!seen) { setIsSeen(true); }
+
+        Alert.alert('Show strory')
     }
 
-    console.log(uri);'        '
-
     return (
-        <TouchableOpacity onPress={() => {console.log('Touched')}} style={storyButtonStyles.storyButton}>
-            <LinearGradient style={ seen ? storyButtonStyles.seenStoryRing : storyButtonStyles.newStoryRing }
+        <TouchableOpacity onPress={handlePress} style={styles.storyButton}>
+            <LinearGradient style={ isSeen ? styles.seenStoryRing : styles.newStoryRing }
                         start={{x: 0, y: 1}} end={{x: 1, y: 0}} 
-                        colors={ seen ? seenStoryRingColors : newStoryRingColors }>
+                        colors={ isSeen ? seenStoryRingColors : newStoryRingColors }>
                 <View>
-                    <View style={ seen ? storyButtonStyles.seenStoryBackdrop : storyButtonStyles.newStoryBackdrop}>
-                        <View style={storyButtonStyles.storyImageContainer}>
-                            <Image style={storyButtonStyles.storyImage}
-                                source={{uri: uri}}/>
+                    <View style={ isSeen ? styles.seenStoryBackdrop : styles.newStoryBackdrop}>
+                        <View style={styles.storyImageContainer}>
+                            <Image style={styles.storyImage}
+                                source={{uri: uriMemo}}/>
                         </View>
                     </View>
                 </View>
@@ -44,7 +55,7 @@ export default function StoryButton(props: storyButtonType)
     )
 }
 
-const storyButtonStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     storyButton: {
         display: 'flex',
         justifyContent: 'center',

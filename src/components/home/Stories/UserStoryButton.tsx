@@ -16,13 +16,13 @@ export default function UserStoryButton(props: storyButtonType)
     const { seen, uri } = props;
   
     return (
-        <View style={userStoryButtonStyles.container}>
+        <View style={styles.container}>
             <StoryButton seen={seen} uri={uri}/>
 
-            <View style={userStoryButtonStyles.addStoryButtonBackdrop}>
-                <TouchableOpacity style={userStoryButtonStyles.addStoryButton}>
-                    <View style={userStoryButtonStyles.iconContainer}>
-                        <FaPlus style={userStoryButtonStyles.icon} color={'white'}/>
+            <View style={styles.addStoryButtonBackdrop}>
+                <TouchableOpacity style={styles.addStoryButton}>
+                    <View style={styles.iconContainer}>
+                        <FaPlus style={styles.icon} color={'white'}/>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -32,7 +32,7 @@ export default function UserStoryButton(props: storyButtonType)
     )
 }
 
-const userStoryButtonStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         position: 'relative',
         height: '100%',

@@ -12,18 +12,18 @@ import InstagramLogo from '../icons/instagram/instagramLogo';
 
 export default function UpperBar() {
     return (
-        <View style={upperBarStyles.container}>
+        <View style={styles.container}>
 
-            <InstagramLogo style={upperBarStyles.instagramLogo} color={'white'}/>
+            <InstagramLogo style={styles.instagramLogo} color={'white'}/>
 
-            <View style={upperBarStyles.iconButtonContainer}>
+            <View style={styles.iconButtonsContainer}>
 
-                <TouchableOpacity style={upperBarStyles.heartButton} activeOpacity={1} onPress={() => console.log('Pressed')}>
-                    <RegHeart style={upperBarStyles.icon} color={'white'}/>
+                <TouchableOpacity style={styles.heartButton} activeOpacity={1} onPress={() => console.log('Pressed')}>
+                    <RegHeart style={styles.icon} color={'white'}/>
                 </TouchableOpacity>
                 
-                <TouchableOpacity style={upperBarStyles.messengerButton} activeOpacity={1} onPress={() => console.log('Pressed')}>
-                    <MessengerLine style={upperBarStyles.icon} color={'white'}/>
+                <TouchableOpacity style={styles.messengerButton} activeOpacity={1} onPress={() => console.log('Pressed')}>
+                    <MessengerLine style={styles.icon} color={'white'}/>
                 </TouchableOpacity>
 
             </View>
@@ -31,7 +31,7 @@ export default function UpperBar() {
     )
 }
 
-const upperBarStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
       display: 'flex',
       flexDirection: 'row',
@@ -40,7 +40,7 @@ const upperBarStyles = StyleSheet.create({
       width: '100%',
       height: 60,
     },
-    iconButtonContainer: {
+    iconButtonsContainer: {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',

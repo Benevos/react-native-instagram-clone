@@ -2,20 +2,23 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import StoryButton from './StoryButton';
 import UserStoryButton from './UserStoryButton';
+import { useAppSelector } from '../../../lib/hooks';
 
 
 
 
 export default function Stories() 
 {
+    const userPictureUri = useAppSelector(state => state.user.uri);
+
     return (
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
-            <View style={storiesStyles.container}>
-                <View style={storiesStyles.elementsContiner}>
+            <View style={styles.container}>
+                <View style={styles.elementsContiner}>
 
                      {/* Here you can call an API to get and iterate over use data */}
 
-                    <UserStoryButton seen={true} uri="https://xsgames.co/randomusers/assets/avatars/female/61.jpg"/>
+                    <UserStoryButton seen={true} uri={userPictureUri}/>
                     <StoryButton seen={false}/>
                     <StoryButton seen={false}/>
                     <StoryButton seen={true}/>
@@ -28,7 +31,7 @@ export default function Stories()
     )
 }
 
-const storiesStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     
     container: {
         display: 'flex',
