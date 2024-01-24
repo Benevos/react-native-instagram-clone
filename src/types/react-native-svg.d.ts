@@ -2,7 +2,8 @@ import 'react-native-svg';
 
 declare module 'react-native-svg' {
   export interface SvgProps {
-    xmlns?: string;
-    xmlnsXlink?: string;
+    xmlns?: string,
+    xmlnsXlink?: string,
+    "aria-hidden"?: string,
   }
 }

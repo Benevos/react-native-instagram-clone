@@ -12,5 +12,7 @@ module.exports = {
     'semi': 'off',
     'radix': 'off',
     'keyword-spacing': 'off',
+    'space-infix-ops': 'off',
+    "react-native/no-inline-styles": "off",
   },
-};
+}

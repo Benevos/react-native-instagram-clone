@@ -15,6 +15,7 @@ import {
 import UpperBar from '../components/home/UpperBar';
 import ActionBar from '../components/home/ActionBar/ActionBar';
 import Stories from '../components/home/Stories/Stories';
+import Feed from '../components/home/Feed/Feed';
 
 function Home() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,16 +28,7 @@ function Home() {
 
       <UpperBar/>
 
-      <ScrollView style={styles.scrollView}
-        contentInsetAdjustmentBehavior="automatic">
-
-        <Stories/>
-
-        <View>
-          <Text>Hello, world!</Text>
-        </View>
-
-      </ScrollView>
+      <Feed/>
 
       <ActionBar/>
     </SafeAreaView>
@@ -48,13 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
-  scrollView: {
-   
-  },
-  icon: {
-    width: '100%',
-    height: '100%',
-  }
 });
 
 export default Home;
