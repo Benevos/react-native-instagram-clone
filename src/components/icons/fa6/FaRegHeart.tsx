@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { SvgProps, Path } from "react-native-svg";
 
-const RegHeart = (props: SvgProps) => 
+const FaRegHeart = (props: SvgProps) => 
 (
     <Svg 
         {...props} 
@@ -13,4 +13,4 @@ const RegHeart = (props: SvgProps) =>
     </Svg>
 );
 
-export default RegHeart;
+export default FaRegHeart;

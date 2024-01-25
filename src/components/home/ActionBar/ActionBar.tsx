@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Reels from '../../icons/instagram/Reels';
-import AddR from '../../icons/cg/AddR';
+import InReels from '../../icons/in/InReels';
+import CgAddR from '../../icons/cg/CgAddR';
 
-import FiSearch from '../../icons/fi/Search';
+import FiSearch from '../../icons/fi/FiSearch';
 import GoHomeFill from '../../icons/go/GoHomeFill';
 import FaUserCircle from '../../icons/fa/FaUserCircle';
 import AbIconButton from './AbIconButton';
@@ -15,8 +15,8 @@ export default function ActionBar()
         <View style={styles.container}>
             <AbIconButton Icon={GoHomeFill}/>
             <AbIconButton Icon={FiSearch}/>
-            <AbIconButton Icon={AddR}/>
-            <AbIconButton Icon={Reels}/>
+            <AbIconButton Icon={CgAddR}/>
+            <AbIconButton Icon={InReels}/>
             <AbAccountButton/>
         </View>
     )

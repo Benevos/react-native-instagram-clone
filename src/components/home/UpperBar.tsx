@@ -6,26 +6,25 @@ import {
     View,
 } from 'react-native';
 
-import MessengerLine from '../icons/ri/MessengerLine';
-import RegHeart from '../icons/fa6/RegHeart';
-import InstagramLogo from '../icons/instagram/instagramLogo';
+import RiMessengerLine from '../icons/ri/RiMessengerLine';
+import FaRegHeart from '../icons/fa6/FaRegHeart';
+import InLogo from '../icons/in/InLogo';
 
 export default function UpperBar() {
     return (
         <View style={styles.container}>
 
-            <InstagramLogo style={styles.instagramLogo} color={'white'}/>
+            <InLogo style={styles.instagramLogo} color={'white'}/>
 
             <View style={styles.iconButtonsContainer}>
 
                 <TouchableOpacity style={styles.heartButton} activeOpacity={1} onPress={() => console.log('Pressed')}>
-                    <RegHeart style={styles.icon} color={'white'}/>
+                    <FaRegHeart style={styles.icon} color={'white'}/>
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.messengerButton} activeOpacity={1} onPress={() => console.log('Pressed')}>
-                    <MessengerLine style={styles.icon} color={'white'}/>
+                    <RiMessengerLine style={styles.icon} color={'white'}/>
                 </TouchableOpacity>
-
             </View>
         </View>
     )

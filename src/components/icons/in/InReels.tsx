@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { SvgProps, Path } from "react-native-svg"
 /* SVGR has dropped some elements not supported by react-native-svg: title */
-const Reels = (props: SvgProps) => (
+const InReels = (props: SvgProps) => (
   <Svg
     {...props}
     fill="currentColor"
@@ -29,4 +29,4 @@ const Reels = (props: SvgProps) => (
     />
   </Svg>
 )
-export default Reels
+export default InReels

@@ -2,8 +2,9 @@ import { View, Text, Image, StyleSheet, Dimensions, ScrollView } from 'react-nat
 import React, { useEffect, useMemo, useState } from 'react'
 
 import PostHeader from './PostHeader/PostHeader';
-import Carousel from 'react-native-reanimated-carousel';
-import PostCarouselItem from './PostCarouselItem';
+import PostContent from './PostContent/PostContent';
+import PostFooter from './PostFooter/PostFooter';
+
 
 interface postType {
     userPictureUri?: string,
@@ -22,7 +23,7 @@ export default function Post(props: postType)
     const { userPictureUri, username } = props;
 
     const getRandomNumber = (min: number, max: number) => {return Math.random() * (max - min) + min;}
-    const number = useMemo(() => parseInt(getRandomNumber(1,5).toFixed(0)), []);
+    const number = useMemo(() => parseInt(getRandomNumber(2,5).toFixed(0)), []);
 
     const data = [...Array(number).keys()];
 
@@ -31,19 +32,9 @@ export default function Post(props: postType)
         <View style={styles.container}>
             <PostHeader userPictureUri={userPictureUri} username={username}/>
 
-            <Carousel
-                loop={false}
-                width={windowDimensions.width}
-                height={windowDimensions.width}
-                autoPlay={false}
-                data={data}
-                scrollAnimationDuration={500}
-                
-                renderItem={({ index }) => (
-                    <PostCarouselItem index={index}/>
-                )}
-            />
-    
+            <PostContent/>
+
+            <PostFooter/>
         </View>
     )
 }
