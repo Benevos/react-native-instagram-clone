@@ -10,11 +10,12 @@ export default function Feed()
     
 
     return (
-        <ScrollView onScrollEndDrag={() => console.log('Stoped')} onScrollBeginDrag={() => console.log('Scrolling')} contentInsetAdjustmentBehavior="automatic">
+        <ScrollView onScrollEndDrag={() => console.log('Stoped')} onScrollBeginDrag={() => console.log('Scrolling')} contentInsetAdjustmentBehavior="automatic" alwaysBounceVertical={true}>
 
             <Stories/>
 
-            <Post/>
+            <Post likes={3}/>
+      
             
         </ScrollView>
     )

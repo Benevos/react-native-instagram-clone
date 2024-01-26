@@ -5,13 +5,14 @@ import HiDotsVertical from '../../../../icons/hi/HiDotsVertical';
 
 interface headerType {
     userPictureUri?: string,
-    username?: string,
+    username: string,
 }
 
 export default function PostHeader(props: headerType) 
 {
     const { userPictureUri, username } = props;
 
+    console.log('Post Header: '+username);
     return (
         <View style={styles.header}>
             <PostUserData userPictureUri={userPictureUri} username={username}/>
