@@ -1,15 +1,31 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import FiMessageCircle from '../../../../../icons/fi/FiMessageCircle'
+import { useCommentSheetContext } from '../../../../../../context/CommentSheetContext'
+import { useAppDispatch } from '../../../../../../lib/hooks';
+import { changeComments } from '../../../../../../lib/features/commentsSheet/commentSheetSlice';
+import { usePostContext } from '../../../../../../context/PostContext';
 
-export default function PFoCommentButton() {
-  return (
-         <TouchableOpacity style={styles.iconButton}>
-            <View style={styles.iconContainer}>
-                <FiMessageCircle color={'white'}/>
-            </View>
-        </TouchableOpacity>
-  )
+export default function PFoCommentButton() 
+{
+    const { comments } = usePostContext();
+
+    const { sheetModalRef } = useCommentSheetContext();
+    const dispatch = useAppDispatch();
+
+    const handlePress = () =>
+    {     
+        dispatch(changeComments(comments));
+        sheetModalRef.current?.present();
+    }   
+
+    return (
+            <TouchableOpacity onPress={handlePress} style={styles.iconButton}>
+                <View style={styles.iconContainer}>
+                    <FiMessageCircle color={'white'}/>
+                </View>
+            </TouchableOpacity>
+    )
 }
 
 const styles = StyleSheet.create({

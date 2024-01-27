@@ -3,28 +3,22 @@ import React from 'react'
 import PFoInteractions from './PFoInteractions/PFoInteractions'
 import PFoLikes from './PFoLikes/PFoLikes';
 import PFoDescription from './PFoDescription/PFoDescription';
+import PFoComments from './PFoComments/PFoComments';
+import PFoDate from './PFoDate';
 
-interface postFooterType {
-  username: string,
-  liked?: boolean,
-  saved?: boolean,
-  likes?: number,
-  description?: string,
-  followdLikes?: (string)[],
-}
-
-export default function PostFooter(props: postFooterType) 
-{
-  const { liked, saved, likes, username } = props;
-  
+export default function PostFooter() 
+{ 
   return (
     <View style={styles.container}>
-        <PFoInteractions liked={liked} saved={saved}/>
+        <PFoInteractions/>
 
-        <PFoLikes likes={likes}/>
+        <PFoLikes/>
 
+        <PFoDescription/>
 
-      <PFoDescription username={username}/>
+        <PFoComments/>
+
+        <PFoDate/>
 
     </View>
   )

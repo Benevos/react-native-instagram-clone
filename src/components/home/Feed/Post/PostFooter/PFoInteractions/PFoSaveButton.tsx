@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import FaBookmark from '../../../../../icons/fa6/FaBookmark'
+import FaRegBookmark from '../../../../../icons/fa6/FaRegBookmark'
+import Animated, { Easing, ReduceMotion, useAnimatedReaction, useSharedValue, withTiming } from 'react-native-reanimated'
+import FaBookmark from '../../../../../icons/fa6/FaBookMark'
 
 interface pFoSavedButtonType {
     saved?: boolean
@@ -10,12 +12,36 @@ interface pFoSavedButtonType {
 export default function PFoSaveButton(props: pFoSavedButtonType) 
 {
     const { saved } = props;
+
+    const [savedState, setSavedState] = useState(saved ? saved : false); 
+
+    const scale = useSharedValue(1); 
+
+    const handlePress = () =>
+    {
+        scale.value = 0;
+        setSavedState(!savedState);
+    }
+
+    useAnimatedReaction(() => scale.value, (prev, current) => {
+        if(prev === 0)
+        {
+            scale.value = withTiming(scale.value + 1, {
+                duration: 300,
+                easing: Easing.elastic(2),
+                reduceMotion: ReduceMotion.System,
+            })
+        }
+    })
     
     return (
-        <TouchableOpacity style={styles.iconButton}>
-            <View style={styles.icon}>
-                <FaBookmark color={'white'}/>
-            </View>
+        <TouchableOpacity onPress={handlePress} style={styles.iconButton}>
+            <Animated.View style={{
+                ...styles.icon,
+                transform: [{ scale: scale }]
+            }}>
+                { !savedState ? <FaRegBookmark color={'white'}/> : <FaBookmark color={'white'}/> }
+            </Animated.View>
         </TouchableOpacity>
     )
 }

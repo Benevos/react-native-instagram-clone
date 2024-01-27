@@ -88,9 +88,11 @@ export default function PostContent(props: postContentType)
                 )}
             />
 
+            { dataMemo.length <= 1 ? <></> :
             <Animated.View style={[sytles.imageIndexContainer, { opacity: fadeAnimation }]}>
                 <Text style={sytles.imageIndexIndicator}>{`${imageIndex+1}/${dataMemo.length}`}</Text>
             </Animated.View>
+            }
         </View>
     )
 }

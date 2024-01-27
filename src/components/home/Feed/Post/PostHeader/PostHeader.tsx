@@ -3,19 +3,13 @@ import React from 'react'
 import PostUserData from './PostUserData';
 import HiDotsVertical from '../../../../icons/hi/HiDotsVertical';
 
-interface headerType {
-    userPictureUri?: string,
-    username: string,
-}
 
-export default function PostHeader(props: headerType) 
+
+export default function PostHeader() 
 {
-    const { userPictureUri, username } = props;
-
-    console.log('Post Header: '+username);
     return (
         <View style={styles.header}>
-            <PostUserData userPictureUri={userPictureUri} username={username}/>
+            <PostUserData/>
             
             <View style={styles.iconContainer}>
                 <HiDotsVertical style={styles.icon} color={'white'}/>

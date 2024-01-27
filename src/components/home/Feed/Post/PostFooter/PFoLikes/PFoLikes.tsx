@@ -2,26 +2,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import PFoFollowedLikes from './PFoFollowedLikes';
+import { usePostContext } from '../../../../../../context/PostContext';
 
-interface pFoLikesType {
-    likes?: number,
-    likesUsernames?: (string)[],
-}
-
-export default function PFoLikes(props: pFoLikesType) 
+export default function PFoLikes() 
 {
-    const { likes, likesUsernames } = props;
+    const { reactions } = usePostContext(); 
 
     const [followedUsernames, setFollowedUsernames] = useState<string[]>([]);
 
     const getRandomNumber = (min: number, max: number) => {return parseInt((Math.random() * (max - min) + min).toFixed(0))}
     
-    const likesMemo = useMemo(() => 
-    {
-        if(likes) { return likes }
-        return parseInt(getRandomNumber(0,1100000000).toFixed(0))
-    }, [likes]);
-
     const commafy = (number: number) => 
     {
         const string = number.toString().split('.');
@@ -34,9 +24,9 @@ export default function PFoLikes(props: pFoLikesType)
     {
         const newFollowedUsernames: (string)[] = [];
 
-        if(likesUsernames) { /* return */ } //? get user followed list and filter*/ 
+        //if(likesUsernames) { /* return */ } //? get user followed list and filter*/ 
         
-        const dummyArray = [...Array(getRandomNumber(0, likes && likes <= 3 ? likes : 3)).keys()]
+        const dummyArray = [...Array(getRandomNumber(0, reactions && reactions <= 3 ? reactions : 3)).keys()]
 
         for(let i=0; i < dummyArray.length; i++)
         {
@@ -54,7 +44,7 @@ export default function PFoLikes(props: pFoLikesType)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    if(likes === 0)
+    if(reactions === 0)
     {
         return <></>
     }
@@ -63,20 +53,20 @@ export default function PFoLikes(props: pFoLikesType)
         <TouchableOpacity style={styles.container}>
             { followedUsernames.length <= 0 ? 
                 <View style={styles.likesContainer}>
-                    <Text style={styles.oneLike}>{`${commafy(likesMemo)} like${likesMemo > 1 ? 's' : ''}`}</Text>
+                    <Text style={styles.oneLike}>{`${commafy(reactions)} like${reactions > 1 ? 's' : ''}`}</Text>
                 </View>
                 :
                 <>
-                    <PFoFollowedLikes likes={likes}/>
+                    <PFoFollowedLikes likes={reactions}/>
                     <View style={styles.likesContainer}>
                         <Text style={styles.likes}>
                             <Text style={styles.username}>{`${followedUsernames[followedUsernames.length - 1]}`}</Text>
 
-                            {  likesMemo - 1 > 0 ?
+                            {  reactions - 1 > 0 ?
                                 <Text>                            
                                 {' and ' }  
-                                    <Text style={styles.username}>{`${commafy(likesMemo - 1)}`}</Text>
-                                {` other${likesMemo-1 <= 1 ? '' : 's'}`}
+                                    <Text style={styles.username}>{`${commafy(reactions - 1)}`}</Text>
+                                {` other${reactions-1 <= 1 ? '' : 's'}`}
                                 </Text> : <></>
                             }
 

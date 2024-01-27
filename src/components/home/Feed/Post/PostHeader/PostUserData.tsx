@@ -1,25 +1,19 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
+import { usePostContext } from '../../../../../context/PostContext';
 
-interface postUserDataType {
-  userPictureUri?: string,
-  username: string,
-}
 
-export default function PostUserData(props: postUserDataType) 
+export default function PostUserData() 
 {
-  const { userPictureUri, username } = props;
-
+  const { username } = usePostContext();
+ 
   const getRandomNumber = (min: number, max: number) => {return Math.random() * (max - min) + min;}
-
   const number = useMemo(() => parseInt(getRandomNumber(1,78).toFixed(0)), []);
-
   const userPictureUriMemo = useMemo(() => 
   {
-      if(userPictureUri) { return userPictureUri; }
       const randomUri = `https://xsgames.co/randomusers/assets/avatars/${number % 2 === 0 ? 'male' : 'female'}/${number}.jpg`;
       return randomUri;
-  }, [number, userPictureUri])
+  }, [number])
 
   return (
     <View style={styles.userData}>

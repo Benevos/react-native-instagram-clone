@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 
 import {
   SafeAreaView,
@@ -16,6 +16,8 @@ import UpperBar from '../components/home/UpperBar/UpperBar';
 import ActionBar from '../components/home/ActionBar/ActionBar';
 import Stories from '../components/home/Stories/Stories';
 import Feed from '../components/home/Feed/Feed';
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import CommentsBottomSheet from '../components/home/CommentsBottomSheet/CommentsBottomSheet';
 
 function Home() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -31,6 +33,8 @@ function Home() {
       <Feed/>
 
       <ActionBar/>
+
+      <CommentsBottomSheet/>
     </SafeAreaView>
   );
 }

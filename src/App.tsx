@@ -6,6 +6,8 @@ import { makeStore, AppStore } from './lib/store'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import Home from './screens/Home';
+import CommentSheetContextProvider from './context/CommentSheetContext';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 function App(): React.JSX.Element 
 {
@@ -17,11 +19,17 @@ function App(): React.JSX.Element
     }
 
   return (
-    <Provider store={storeRef.current}>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <Home/>
-      </GestureHandlerRootView>
-    </Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Provider store={storeRef.current}>
+      
+        <BottomSheetModalProvider>
+          <CommentSheetContextProvider>
+            <Home/>
+          </CommentSheetContextProvider>
+        </BottomSheetModalProvider>
+      
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
 

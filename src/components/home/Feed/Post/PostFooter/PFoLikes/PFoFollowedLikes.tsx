@@ -29,7 +29,6 @@ export default function PFoFollowedLikes(props: pFoFollowedLikesType)
         } 
         
         const dummyArray = [...Array(getRandomNumber(1, likes && likes <= 3 ? likes : 3)).keys()];
-        console.log(dummyArray);
         
         followedPicturesUri = dummyArray.map(() => 
             {

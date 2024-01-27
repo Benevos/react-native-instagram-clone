@@ -11,6 +11,7 @@
     "postinstall": "npx typesync"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4.6.0",
     "@reduxjs/toolkit": "^2.0.1",
     "babel-plugin-module-resolver": "^5.0.0",
     "install": "^0.13.0",

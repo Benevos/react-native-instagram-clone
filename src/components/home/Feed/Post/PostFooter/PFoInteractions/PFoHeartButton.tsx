@@ -1,6 +1,8 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AiOutlineHeart from '../../../../../icons/ai/AiOutlineHeart'
+import Animated, { Easing, ReduceMotion, useAnimatedReaction, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
+import AiFillHeart from '../../../../../icons/ai/AiFillHeart';
 
 interface pFoHeartButtonType {
     liked?: boolean
@@ -10,11 +12,37 @@ export default function PFoHeartButton(props: pFoHeartButtonType)
 {
     const { liked } = props;
 
+    const [likedState, setLikedState] = useState(liked ? liked : false);
+
+    const scale = useSharedValue(1);
+
+    const handlePress = () =>
+    {
+        scale.value = 0;
+        setLikedState(!likedState);
+    }
+
+    useAnimatedReaction(() => scale.value, (prev, current) => {
+        if(prev === 0)
+        {
+            scale.value = withTiming(scale.value + 1, {
+                duration: 300,
+                easing: Easing.elastic(2),
+                reduceMotion: ReduceMotion.System,
+            })
+        }
+    })
+    
     return (
-            <TouchableOpacity style={styles.iconButton}>
-                <View style={styles.iconContainer}>
-                    <AiOutlineHeart color={'white'}/>
-                </View>
+            <TouchableOpacity onPress={handlePress} style={styles.iconButton}>
+
+                <Animated.View style={{
+                    ...styles.iconContainer,
+                    transform: [{ scale: scale }]
+                }}>
+
+                     { !likedState ? <AiOutlineHeart color={'white'}/> : <AiFillHeart color={'red'}/>}
+                </Animated.View>
             </TouchableOpacity>
     )
 }
