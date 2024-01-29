@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import FaRegBookmark from '../../../../../icons/fa6/FaRegBookmark'
 import Animated, { Easing, ReduceMotion, useAnimatedReaction, useSharedValue, withTiming } from 'react-native-reanimated'
-import FaBookmark from '../../../../../icons/fa6/FaBookMark'
+import FaBookmark from '../../../../../icons/fa6/FaBookmark'
 
 interface pFoSavedButtonType {
     saved?: boolean

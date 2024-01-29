@@ -3,19 +3,19 @@ import React from 'react'
 import FiMessageCircle from '../../../../../icons/fi/FiMessageCircle'
 import { useCommentSheetContext } from '../../../../../../context/CommentSheetContext'
 import { useAppDispatch } from '../../../../../../lib/hooks';
-import { changeComments } from '../../../../../../lib/features/commentsSheet/commentSheetSlice';
+import { setPostId } from '../../../../../../lib/features/commentsSheet/commentSheetSlice';
 import { usePostContext } from '../../../../../../context/PostContext';
 
 export default function PFoCommentButton() 
 {
-    const { comments } = usePostContext();
+    const { id } = usePostContext();
 
     const { sheetModalRef } = useCommentSheetContext();
     const dispatch = useAppDispatch();
 
     const handlePress = () =>
     {     
-        dispatch(changeComments(comments));
+        dispatch(setPostId(id));
         sheetModalRef.current?.present();
     }   
 

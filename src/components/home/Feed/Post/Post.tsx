@@ -5,11 +5,6 @@ import PostHeader from './PostHeader/PostHeader';
 import PostContent from './PostContent/PostContent';
 import PostFooter from './PostFooter/PostFooter';
 
-
-
-
-const windowDimensions = Dimensions.get('screen');
-
 export default function Post() 
 {    
     return (
@@ -25,6 +20,7 @@ export default function Post()
 
 const styles = StyleSheet.create({
     container: {
+        zIndex: 4,
         width: '100%',
         marginBottom: 15,
     }

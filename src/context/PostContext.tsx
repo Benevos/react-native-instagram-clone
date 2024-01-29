@@ -1,8 +1,6 @@
 import { createContext, useContext } from "react";
 import { Post } from "../types/post";
 
-
-
 interface PostContextProviderProps extends Post {
     children: React.ReactNode,
 }

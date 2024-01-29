@@ -7,13 +7,14 @@ export default function PostUserData()
 {
   const { username } = usePostContext();
  
-  const getRandomNumber = (min: number, max: number) => {return Math.random() * (max - min) + min;}
-  const number = useMemo(() => parseInt(getRandomNumber(1,78).toFixed(0)), []);
+  const getRandomNumber = (min: number, max: number) => {return parseInt((Math.random() * (max - min) + min).toFixed(0));}
+
   const userPictureUriMemo = useMemo(() => 
   {
+      const number = getRandomNumber(1, 78); 
       const randomUri = `https://xsgames.co/randomusers/assets/avatars/${number % 2 === 0 ? 'male' : 'female'}/${number}.jpg`;
       return randomUri;
-  }, [number])
+  }, [])
 
   return (
     <View style={styles.userData}>

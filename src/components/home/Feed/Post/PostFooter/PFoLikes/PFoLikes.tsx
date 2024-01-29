@@ -4,9 +4,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import PFoFollowedLikes from './PFoFollowedLikes';
 import { usePostContext } from '../../../../../../context/PostContext';
 
-export default function PFoLikes() 
+interface PFoLikesProps {
+    reactionsCounter: number,
+}
+
+export default function PFoLikes(props: PFoLikesProps) 
 {
-    const { reactions } = usePostContext(); 
+    const { reactionsCounter } = props; 
 
     const [followedUsernames, setFollowedUsernames] = useState<string[]>([]);
 
@@ -26,7 +30,7 @@ export default function PFoLikes()
 
         //if(likesUsernames) { /* return */ } //? get user followed list and filter*/ 
         
-        const dummyArray = [...Array(getRandomNumber(0, reactions && reactions <= 3 ? reactions : 3)).keys()]
+        const dummyArray = [...Array(getRandomNumber(0, reactionsCounter && reactionsCounter <= 3 ? reactionsCounter : 3)).keys()]
 
         for(let i=0; i < dummyArray.length; i++)
         {
@@ -44,7 +48,7 @@ export default function PFoLikes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    if(reactions === 0)
+    if(reactionsCounter === 0)
     {
         return <></>
     }
@@ -53,20 +57,20 @@ export default function PFoLikes()
         <TouchableOpacity style={styles.container}>
             { followedUsernames.length <= 0 ? 
                 <View style={styles.likesContainer}>
-                    <Text style={styles.oneLike}>{`${commafy(reactions)} like${reactions > 1 ? 's' : ''}`}</Text>
+                    <Text style={styles.oneLike}>{`${commafy(reactionsCounter)} like${reactionsCounter > 1 ? 's' : ''}`}</Text>
                 </View>
                 :
                 <>
-                    <PFoFollowedLikes likes={reactions}/>
+                    <PFoFollowedLikes likes={reactionsCounter}/>
                     <View style={styles.likesContainer}>
                         <Text style={styles.likes}>
                             <Text style={styles.username}>{`${followedUsernames[followedUsernames.length - 1]}`}</Text>
 
-                            {  reactions - 1 > 0 ?
+                            {  reactionsCounter - 1 > 0 ?
                                 <Text>                            
                                 {' and ' }  
-                                    <Text style={styles.username}>{`${commafy(reactions - 1)}`}</Text>
-                                {` other${reactions-1 <= 1 ? '' : 's'}`}
+                                    <Text style={styles.username}>{`${commafy(reactionsCounter - 1)}`}</Text>
+                                {` other${reactionsCounter-1 <= 1 ? '' : 's'}`}
                                 </Text> : <></>
                             }
 

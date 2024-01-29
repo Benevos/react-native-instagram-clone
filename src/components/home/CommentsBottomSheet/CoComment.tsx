@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React, { useMemo, useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import GoHeart from '../../icons/go/GoHeart';
+import CoHeartButton from './CoHeartButton';
 
 interface CoCommentType{
     seen?: boolean,
@@ -23,10 +24,12 @@ export default function CoComment(props: CoCommentType)
     const newStoryRingColors = ['#ffc400', '#ffc400', '#ff0000', '#ff00d4', '#ff00d4'];
     const seenStoryRingColors = ['#2a2a2a', '#2a2a2a'];
 
-    
-
-    const number = useMemo(() => getRandomNumber(1,78), []); 
-    const randomUri = `https://xsgames.co/randomusers/assets/avatars/${number % 2 === 0 ? 'male' : 'female'}/${number}.jpg`;
+    const randomUri = useMemo(() => 
+    {
+        const number = getRandomNumber(1,78); 
+        return `https://xsgames.co/randomusers/assets/avatars/${number % 2 === 0 ? 'male' : 'female'}/${number}.jpg`
+    }
+    , []);
 
     return (
         <View style={styles.commentContainer}>
@@ -49,12 +52,7 @@ export default function CoComment(props: CoCommentType)
                 <Text style={styles.answerButton}>Answer</Text>
             </View>
 
-            <TouchableOpacity style={styles.iconButton}>
-                <View style={styles.iconContainer}>
-                    <GoHeart color={'#b5b5b5'}/>
-                </View>
-                <Text style={styles.reactionsCounter}>{reactions}</Text>
-            </TouchableOpacity>
+            <CoHeartButton reactions={reactions}/>
         </View>
     )
 }
@@ -117,21 +115,5 @@ const styles = StyleSheet.create({
         color: '#a3a3a3',
         marginTop: 4,
     },
-    iconButton: {
-        position: 'absolute',
-        right: -5,
-        padding: 5,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    iconContainer: {
-        width: 16,
-        height: 16,
-    },
-    reactionsCounter: {
-        color: '#b5b5b5',
-        fontSize: 11,
-        fontWeight: '500',
-    }
+
 })

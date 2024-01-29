@@ -2,6 +2,8 @@ import { View, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native'
 import React, { useMemo, useState } from 'react'
 
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigationContext } from '../../../context/NavigationContext';
+import Animated from 'react-native-reanimated';
 
 interface storyButtonType {
     seen: boolean,
@@ -12,13 +14,14 @@ export default function StoryButton(props: storyButtonType)
 {
     const { seen, uri } = props;
 
-    const [isSeen, setIsSeen] = useState(seen);
+    const { navigation } = useNavigationContext();
 
+    const [isSeen, setIsSeen] = useState(seen);
+   
     const newStoryRingColors = ['#ffc400', '#ffc400', '#ff0000', '#ff00d4', '#ff00d4'];
     const seenStoryRingColors = ['rgba(126,126,126,0.6)', 'rgba(126,126,126,0.6)'];
 
     const getRandomNumber = (min: number, max: number) => {return Math.random() * (max - min) + min;}
-
     
     const uriMemo = useMemo(() => 
     {
@@ -33,8 +36,8 @@ export default function StoryButton(props: storyButtonType)
     const handlePress = () =>
     {
         if(!seen) { setIsSeen(true); }
-
-        Alert.alert('Show strory')
+        navigation.navigate('Stories')
+        
     }
 
     return (
@@ -44,10 +47,10 @@ export default function StoryButton(props: storyButtonType)
                         colors={ isSeen ? seenStoryRingColors : newStoryRingColors }>
                 <View>
                     <View style={ isSeen ? styles.seenStoryBackdrop : styles.newStoryBackdrop}>
-                        <View style={styles.storyImageContainer}>
+                        <Animated.View style={styles.storyImageContainer} >
                             <Image style={styles.storyImage}
                                 source={{uri: uriMemo}}/>
-                        </View>
+                        </Animated.View>
                     </View>
                 </View>
             </LinearGradient>

@@ -24,6 +24,7 @@ export default function ActionBar()
 
 const styles = StyleSheet.create({
     container: {
+        zIndex: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',

@@ -34,6 +34,7 @@ export default function Stories()
 const styles = StyleSheet.create({
     
     container: {
+        zIndex: 3,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, StyleSheet, Animated } from 'react-native'
+import { View, Text, Dimensions, StyleSheet, Animated as VanillaAnimated } from 'react-native'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Carousel from 'react-native-reanimated-carousel';
 import PostCarouselItem from './PostCarouselItem';
@@ -18,7 +18,7 @@ export default function PostContent(props: postContentType)
     const [prevImageIndex, setPrevImageIndex] = useState(0);
     const [lastSnapTime, setLastSnapTime] = useState(Date.now());
 
-    const fadeAnimation = useRef(new Animated.Value(0)).current;
+    const fadeAnimation = useRef(new VanillaAnimated.Value(0)).current;
 
     const getRandomNumber = (min: number, max: number) => {return Math.random() * (max - min) + min;}
 
@@ -33,7 +33,7 @@ export default function PostContent(props: postContentType)
     {
         if(Date.now() - lastSnapTime < 25000) { return; }
 
-        Animated.timing( fadeAnimation, {
+        VanillaAnimated.timing( fadeAnimation, {
             toValue: 0,
             duration: 150,
             useNativeDriver: true,
@@ -53,7 +53,7 @@ export default function PostContent(props: postContentType)
 
     const animateFade = () =>
     {
-        Animated.timing( fadeAnimation, {
+        VanillaAnimated.timing( fadeAnimation, {
             toValue: 1,
             duration: 150,
             useNativeDriver: true,
@@ -80,6 +80,7 @@ export default function PostContent(props: postContentType)
                 width={windowDimensions.width}
                 height={windowDimensions.width}
                 autoPlay={false}
+                style={{zIndex: 7, overflow: 'visible'}}
                 data={dataMemo}
                 scrollAnimationDuration={500}
                 onSnapToItem={handleSnapToItem}
@@ -88,11 +89,9 @@ export default function PostContent(props: postContentType)
                 )}
             />
 
-            { dataMemo.length <= 1 ? <></> :
-            <Animated.View style={[sytles.imageIndexContainer, { opacity: fadeAnimation }]}>
+            <VanillaAnimated.View style={[sytles.imageIndexContainer, { opacity: fadeAnimation }]}>
                 <Text style={sytles.imageIndexIndicator}>{`${imageIndex+1}/${dataMemo.length}`}</Text>
-            </Animated.View>
-            }
+            </VanillaAnimated.View>
         </View>
     )
 }
@@ -102,6 +101,7 @@ const sytles = StyleSheet.create({
         position: 'relative',
         width: windowDimensions.width,
         height: windowDimensions.width,
+        zIndex: 6,
     },
     imageIndexContainer: {
         opacity: 0,
@@ -112,6 +112,7 @@ const sytles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 11,
         borderRadius: 15,
+        zIndex: 7,
     },
     imageIndexIndicator: {
         color: 'white',

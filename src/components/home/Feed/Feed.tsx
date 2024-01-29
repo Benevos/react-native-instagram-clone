@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native'
-import React, { useEffect, useMemo } from 'react'
+import { View, Text, ScrollView, StyleSheet, Image, NativeSyntheticEvent, NativeScrollEvent, Easing, Animated } from 'react-native'
+import React, { useEffect, useMemo, useState } from 'react'
 import Stories from '../Stories/Stories'
 import Post from './Post/Post'
 import { useAppDispatch, useAppSelector } from '../../../lib/hooks'
@@ -10,67 +10,30 @@ import { Post as PostType } from '../../../types/post'
 import { setPosts } from '../../../lib/features/posts/postsSlice'
 import PostProvider from '../../../context/PostContext'
 import uuid from 'react-native-uuid';
+import { ReduceMotion, SharedValue, useAnimatedReaction, withTiming } from 'react-native-reanimated'
+import getRandomNumber from '../../../utils/get-random-number'
+import { getDummyJsonComments, getDummyJsonPosts, getDummyJsonUsers, getLoremPicusmImageUri } from '../../../utils/external-api-getters'
 
-export default function Feed() 
+interface FeedProps {
+    scrollY: Animated.Value,
+    opacity: SharedValue<number>,
+}
+
+export default function Feed(props: FeedProps) 
 {
+    const { scrollY, opacity } = props;
+    
     const posts = useAppSelector(state => state.posts.posts);
     const dispatch = useAppDispatch();
 
-    const postNumber = useMemo(() => 1,[]);
+    const postNumber = useMemo(() => 3,[]);
 
-    const getRandomNumber = (min: number, max: number) => {return parseInt((Math.random() * (max - min) + min).toFixed(0));}
-
-    const getDummyJsonPosts = async () => 
-    {
-        const totalPosts = 150;
-
-        const skip = getRandomNumber(0, totalPosts - postNumber);
-        const limit = getRandomNumber(skip, skip + postNumber);
-
-        const res = await fetch(`https://dummyjson.com/posts?skip=${skip}&limit=${limit}`);
-        const data: DummyJsonPosts = await res.json();
-
-        return data
-    }
-
-    const getDummyJsonComments = async () => 
-    {
-        const totalComments = 100;
-
-        const skip = getRandomNumber(0, totalComments);
-        const limit = getRandomNumber(skip, totalComments);
-
-        const res = await fetch(`https://dummyjson.com/comments?skip=${skip}&limit=${limit}`);
-        const data: DummyJsonComments = await res.json();
-
-        return data;
-    }
-
-    const getDummyJsonUsers = async () => 
-    {
-        const totalUsers = 100;
-        const skip = getRandomNumber(0, totalUsers - postNumber);
-        const limit = getRandomNumber(skip, skip + postNumber);
-
-        const res = await fetch(`https://dummyjson.com/users?skip=${skip}&limit=${limit}`);
-        const data: DummyJsonUsers = await res.json();
-
-        return data;
-    }
-
-    const getLoremPicusmImageUri = async () => {
-        const imageNumber = getRandomNumber(1, 3);
-        const imagesUri = [...Array(imageNumber).keys()].map((key, index) =>
-            `https://picsum.photos/300/300/?random&t="${new Date().getTime()}"`
-        )
-        return imagesUri;
-    }
         
     const setNewPosts = async () => 
     {
-        const dummyJsonPosts = await getDummyJsonPosts();
+        const dummyJsonPosts = await getDummyJsonPosts(postNumber);
         const dummyJsonComments = await getDummyJsonComments();
-        const dummyJsonUsers = await getDummyJsonUsers();
+        const dummyJsonUsers = await getDummyJsonUsers(postNumber);
         const content = await getLoremPicusmImageUri();
 
         const newPosts: PostType[] = [...Array(postNumber).keys()].map((key, index) => 
@@ -100,6 +63,12 @@ export default function Feed()
         dispatch(setPosts(newPosts));
     }
 
+    
+    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => 
+    {
+        scrollY.setValue(event.nativeEvent.contentOffset.y);
+    };
+
     useEffect(() => {
         setNewPosts();
     
@@ -107,7 +76,8 @@ export default function Feed()
     }, [])
 
     return (
-        <ScrollView onScrollEndDrag={() => console.log('Stoped')} onScrollBeginDrag={() => console.log('Scrolling')} contentInsetAdjustmentBehavior="automatic" alwaysBounceVertical={true}>
+        <ScrollView style={styles.scrollView}  onScroll={handleScroll} contentContainerStyle={styles.contentContainer}
+        contentInsetAdjustmentBehavior="automatic" alwaysBounceVertical={true}>
 
             <Stories/>
 
@@ -128,3 +98,12 @@ export default function Feed()
     )
 }
 
+const styles = StyleSheet.create({
+    scrollView: {
+        zIndex: 1,
+    },
+    contentContainer: {
+        zIndex: 2,
+        paddingTop: 55,
+    }
+})

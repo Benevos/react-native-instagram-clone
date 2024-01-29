@@ -3,14 +3,16 @@ import React, { useEffect, useState } from 'react'
 import AiOutlineHeart from '../../../../../icons/ai/AiOutlineHeart'
 import Animated, { Easing, ReduceMotion, useAnimatedReaction, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import AiFillHeart from '../../../../../icons/ai/AiFillHeart';
+import { usePostContext } from '../../../../../../context/PostContext';
 
 interface pFoHeartButtonType {
     liked?: boolean
+    setReactionsCounter: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function PFoHeartButton(props: pFoHeartButtonType) 
 {
-    const { liked } = props;
+    const { liked, setReactionsCounter } = props;
 
     const [likedState, setLikedState] = useState(liked ? liked : false);
 
@@ -19,7 +21,14 @@ export default function PFoHeartButton(props: pFoHeartButtonType)
     const handlePress = () =>
     {
         scale.value = 0;
-        setLikedState(!likedState);
+        setLikedState(!likedState)
+
+        if(likedState) { 
+            setReactionsCounter(prev => prev-1);
+            return;
+        }
+
+        setReactionsCounter(prev => prev+1)
     }
 
     useAnimatedReaction(() => scale.value, (prev, current) => {

@@ -1,12 +1,35 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import GoHeart from '../../../../../icons/go/GoHeart';
-import { Comments } from '../../../../../../types/post';
+import { Comment } from '../../../../../../types/post';
+import Animated, { Easing, ReduceMotion, useAnimatedReaction, useSharedValue, withTiming } from 'react-native-reanimated';
+import AiOutlineHeart from '../../../../../icons/ai/AiOutlineHeart';
+import AiFillHeart from '../../../../../icons/ai/AiFillHeart';
 
-export default function PFoPrevComment({ comment }: { comment: Comments }) 
+export default function PFoPrevComment({ comment, liked }: { comment: Comment, liked?: boolean }) 
 {
     const { username, body } = comment;
+
+    const [likedState, setLikedState] = useState(liked ? liked : false);
+    
+    const scale = useSharedValue(1);
+
+    const handlePress = () =>
+    {
+        scale.value = 0;
+        setLikedState(!likedState)
+    }
+
+    useAnimatedReaction(() => scale.value, (prev, current) => {
+        if(prev === 0)
+        {
+            scale.value = withTiming(scale.value + 1, {
+                duration: 300,
+                easing: Easing.elastic(2),
+                reduceMotion: ReduceMotion.System,
+            })
+        }
+    })
 
     return (
         <View style={styles.prevCommentContainer}>
@@ -22,14 +45,18 @@ export default function PFoPrevComment({ comment }: { comment: Comments })
                 }
             </Text>
 
-            <TouchableOpacity style={styles.iconButton}>
-                <View style={styles.iconContainer}>
-                     <GoHeart color={'#b5b5b5'}/>
-                </View>
+            <TouchableOpacity onPress={handlePress} style={styles.iconButton}>
+                <Animated.View style={{
+                    ...styles.iconContainer,
+                    transform: [{ scale: scale }]
+                    }}>
+                     { !likedState ? <AiOutlineHeart color={'#B5B5B5'}/> : <AiFillHeart color={'red'}/>}
+                </Animated.View>
             </TouchableOpacity>
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     prevCommentContainer: {

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user/userSlice';
 import commentsReducer from './features/commentsSheet/commentSheetSlice'
 import postsReducer from './features/posts/postsSlice'
+import uiReducer from './features/ui/uiSlice'
 
 
 export const makeStore = () => {
@@ -9,7 +10,8 @@ export const makeStore = () => {
     reducer: {
         user: userReducer,
         comments: commentsReducer,
-        posts: postsReducer
+        posts: postsReducer,
+        ui: uiReducer,
     }
   })
 }

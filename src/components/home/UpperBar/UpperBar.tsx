@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
+  Animated,
     StyleSheet,
     TouchableOpacity,
     View,
@@ -12,25 +13,41 @@ import InLogo from '../../icons/in/InLogo';
 import AiOutlineHeart from '../../icons/ai/AiOutlineHeart';
 import UpHeartButton from './UpHeartButton';
 import UpMessageButton from './UpMessageButton';
+import { SharedValue, useSharedValue } from 'react-native-reanimated';
+import { useAppSelector } from '../../../lib/hooks';
 
-export default function UpperBar() {
-    return (
-        <View style={styles.container}>
+interface UpperBarProps {
+  translateY: Animated.AnimatedInterpolation<string | number>,
+  opacity: SharedValue<number>,
+}
 
-            <InLogo style={styles.instagramLogo} color={'white'}/>
+export default function UpperBar(props: UpperBarProps) 
+{
+  const { translateY, opacity } = props;
+  
+  return (
+      <Animated.View style={{
+          ...styles.container,
+          transform: [{translateY: translateY}],
+        }}>
 
-            <View style={styles.iconButtonsContainer}>
+          <InLogo style={styles.instagramLogo} color={'white'}/>
 
-                <UpHeartButton/>
-                
-                <UpMessageButton/>
-            </View>
-        </View>
-    )
+          <View style={styles.iconButtonsContainer}>
+
+              <UpHeartButton/>
+              
+              <UpMessageButton/>
+          </View>
+      </Animated.View>
+  )
 }
 
 const styles = StyleSheet.create({
     container: {
+      position: 'absolute',
+      backgroundColor: 'black',
+      zIndex: 10,
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',

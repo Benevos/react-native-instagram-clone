@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
 import { useCommentSheetContext } from '../../../context/CommentSheetContext';
 import CoFooter from './CoFooter';
 import CoScrollView from './CoScrollView';
+import { useAppSelector } from '../../../lib/hooks';
 
 export default function CommentsBottomSheet() 
 {
     const { sheetModalRef } = useCommentSheetContext();
+    
+    const postId: number = useAppSelector(state => state.comments.postId);
+    const posts = useAppSelector(state => state.posts.posts).filter(post => post.id === postId);
+    const sortedComments = postId !== 0 ? [...posts[0].comments].sort((a, b) => b.reactions - a.reactions) : [];
 
     const snapPoints = useMemo(() => ["20%", "50%", "100%"], []);
     
@@ -16,10 +21,12 @@ export default function CommentsBottomSheet()
         if(index === 0) { sheetModalRef.current?.close() }
     }, [sheetModalRef])
 
-    const renderFooter = useCallback((props) => <CoFooter {...props}/>, [])
+    const renderFooter = useCallback((props) => 
+        <CoFooter username={postId !== 0 ? posts[0].username : ''} {...props}/>
+    , [postId, posts]);
 
     const renderBackrop = useCallback((props) => <BottomSheetBackdrop {...props}/>,[]);
-    
+
     return (
         
         <BottomSheetModal
@@ -41,7 +48,9 @@ export default function CommentsBottomSheet()
 
             <BottomSheetView style={styles.container}>
                 
-                <CoScrollView/>
+                { sortedComments.length <= 0 ? <></> :
+                    <CoScrollView comments={sortedComments}/>
+                }
 
             </BottomSheetView>
         </BottomSheetModal>

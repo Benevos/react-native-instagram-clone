@@ -4,12 +4,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import PFoPrevComment from './PFoPrevComment';
 import { useCommentSheetContext } from '../../../../../../context/CommentSheetContext';
 import { useAppDispatch } from '../../../../../../lib/hooks';
-import { changeComments } from '../../../../../../lib/features/commentsSheet/commentSheetSlice';
+import { setPostId } from '../../../../../../lib/features/commentsSheet/commentSheetSlice';
 import { usePostContext } from '../../../../../../context/PostContext';
 
 export default function PFoComments() 
 {
-    const { comments } = usePostContext();
+    const { comments, id } = usePostContext();
 
     const { sheetModalRef } = useCommentSheetContext()
 
@@ -17,7 +17,7 @@ export default function PFoComments()
 
     const handlePress = () =>
     {
-        dispatch(changeComments(comments));
+        dispatch(setPostId(id));
         sheetModalRef.current?.present();
     }
 

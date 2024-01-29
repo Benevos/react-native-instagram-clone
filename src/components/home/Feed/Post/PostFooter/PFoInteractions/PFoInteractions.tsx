@@ -5,12 +5,18 @@ import PFoCommentButton from './PFoCommentButton'
 import PFoShareButton from './PFoShareButton'
 import PFoSaveButton from './PFoSaveButton'
 
-export default function PFoInteractions() 
+interface PFoInteractionsProps {
+    setReactionsCounter: React.Dispatch<React.SetStateAction<number>>
+}
+
+export default function PFoInteractions(props: PFoInteractionsProps) 
 {
+    const { setReactionsCounter } = props;
+
     return (
         <View style={styles.interactions}>
             <View style={styles.reactions}>
-                <PFoHeartButton/>
+                <PFoHeartButton setReactionsCounter={setReactionsCounter}/>
                 <PFoCommentButton/>
                 <PFoShareButton/>
             </View>
