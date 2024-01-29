@@ -1,6 +1,6 @@
 # About the project
 
-This is an Instagram Clone from its home screen, this was made in order to learn more about how to make a React Native app
+This is an Instagram Clone from its home screen, this was made in order to learn more about how to make a React Native app. Only works on Android since I do not have mediums to emulate iOS
 
 ![](demo.gif)
 
